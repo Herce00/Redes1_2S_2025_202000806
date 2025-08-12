@@ -1,1 +1,13 @@
-# Redes1_2S_2025_202000806
+# **_Práctica 1_**
+
+### Universidad de San Carlos de Guatemala
+
+### Facultad de Ingeniería
+
+### Escuela de Ciencias y Sistemas
+
+### Redes de Computadoras 1
+
+<br></br>
+
+---
