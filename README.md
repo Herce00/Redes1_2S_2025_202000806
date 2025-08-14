@@ -103,3 +103,47 @@ Correo: cesarhernandez0019@gmail.com
         line console 0
         password ConstraseñaAsignar
         login
+
+#### **VPCs queda pendientes**
+
+#### **Ping entre host**
+
+1.  De recepcion a contabilidad
+
+    ![imagen](/img/ping1.PNG)
+
+2.  De contabilidad a Reuniones
+
+    ![imagen](/img/ping2.PNG)
+
+3.  De reuniones a legal
+
+    ![imagen](/img/ping3.PNG)
+
+4.  De legal a arquitectura
+
+    ![imagen](/img/ping4.PNG)
+
+5.  De arquitectura a revicion de planos
+
+    ![imagen](/img/ping5.PNG)
+
+6.  De revision de planos a urbanismo
+
+    ![imagen](/img/ping6.PNG)
+
+7.  De urbanismo a Direccione general
+
+    ![imagen](/img/ping7.PNG)
+
+8.  De Direccion general a servidores principales
+
+    ![imagen](/img/ping8.PNG)
+
+9.  De servidores principales a ingenieria civil
+
+    ![imagen](/img/ping9.PNG)
+
+10. De ingenieria civil a recepcion
+
+    ![imagen](/img/ping10.PNG)
