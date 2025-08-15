@@ -104,7 +104,47 @@ Correo: cesarhernandez0019@gmail.com
         password ConstraseñaAsignar
         login
 
-#### **VPCs queda pendientes**
+#### **VPCs**
+
+1.  Recepcion
+
+    ![imagen](/img/VPC1.PNG)
+
+2.  Contabilidad
+
+    ![imagen](/img/VPC2.PNG)
+
+3.  Reuniones
+
+    ![imagen](/img/VPC3.PNG)
+
+4.  Legal
+
+    ![imagen](/img/VPC4.PNG)
+
+5.  Arquitectura
+
+    ![imagen](/img/VPC5.PNG)
+
+6.  Revicion de planos
+
+    ![imagen](/img/VPC6.PNG)
+
+7.  Urbanismo
+
+    ![imagen](/img/VPC7.PNG)
+
+8.  Direccion general
+
+    ![imagen](/img/VPC8.PNG)
+
+9.  Servidores principales
+
+    ![imagen](/img/VPC9.PNG)
+
+10. Ingenieria civil
+
+    ![imagen](/img/VPC10.PNG)
 
 #### **Ping entre host**
 
@@ -147,3 +187,7 @@ Correo: cesarhernandez0019@gmail.com
 10. De ingenieria civil a recepcion
 
     ![imagen](/img/ping10.PNG)
+
+#### **Demostracion de paquetes ARP Y ICMP**
+
+![imagen](/img/Simulacion.PNG)
