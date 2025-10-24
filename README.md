@@ -20,3 +20,11 @@ Correo: cesarhernandez0019@gmail.com
 2. Tarea 3
 
    [Documentacion Tarea 3](/T3/README.md)
+
+3. Proyecto 1
+
+   [Documentacion Proyecto 1](/Proyecto1/README.md)
+
+4. Proyecto 2
+
+   [Documentacion Proyecto 2](/Proyecto2/README.md)
