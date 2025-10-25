@@ -19,30 +19,30 @@ Correo: cesarhernandez0019@gmail.com
 
 Topologia completa
 
-![imagen](/Proyecto2/img/topo0.PNG)
+![imagen](/Proyecto2/img/topo0.png)
 
 Implementacion de la topologia del area DIGA
 
-![imagen](/Proyecto2/img/topo1.PNG)
+![imagen](/Proyecto2/img/topo1.png)
 
 Implementacion de la topologia del area de Biblioteca
 
-![imagen](/Proyecto2/img/topo2.PNG)
+![imagen](/Proyecto2/img/topo2.png)
 
 Implementacion de la topologia del area del T4
 
-![imagen](/Proyecto2/img/topo3.PNG)
+![imagen](/Proyecto2/img/topo3.png)
 
 Implementacion de la topologia del area del S11
-![imagen](/Proyecto2/img/topo4.PNG)
+![imagen](/Proyecto2/img/topo4.png)
 
 Implementacion de la topologia del area del S12
 
-![imagen](/Proyecto2/img/topo5.PNG)
+![imagen](/Proyecto2/img/topo5.png)
 
 Implementacion de la topologia del area del backbone
 
-![imagen](/Proyecto2/img/topo6.PNG)
+![imagen](/Proyecto2/img/topo6.png)
 
 ---
 
