@@ -1,4 +1,4 @@
-# **_Proyecto 1_**
+# **_Proyecto 2_**
 
 ## NetUSAC: Proyecto de Interconexión
 
@@ -19,27 +19,30 @@ Correo: cesarhernandez0019@gmail.com
 
 Topologia completa
 
-![imagen](/Proyecto1/img/topo0.PNG)
+![imagen](/Proyecto2/img/topo0.PNG)
 
-Implementacion de la topologia del area central
+Implementacion de la topologia del area DIGA
 
-![imagen](/Proyecto1/img/topo1.PNG)
+![imagen](/Proyecto2/img/topo1.PNG)
 
-Implementacion de la topologia del area de gerencia
+Implementacion de la topologia del area de Biblioteca
 
-![imagen](/Proyecto1/img/topo2.PNG)
+![imagen](/Proyecto2/img/topo2.PNG)
 
-Implementacion de la topologia del area del Analisis de datos
+Implementacion de la topologia del area del T4
 
-![imagen](/Proyecto1/img/topo3.PNG)
+![imagen](/Proyecto2/img/topo3.PNG)
 
-Implementacion de la topologia del area del Infraestructura IT
+Implementacion de la topologia del area del S11
+![imagen](/Proyecto2/img/topo4.PNG)
 
-![imagen](/Proyecto1/img/topo4.PNG)
+Implementacion de la topologia del area del S12
 
-Implementacion de la topologia del area de Redaccion digital
+![imagen](/Proyecto2/img/topo5.PNG)
 
-![imagen](/Proyecto1/img/topo5.PNG)
+Implementacion de la topologia del area del backbone
+
+![imagen](/Proyecto2/img/topo6.PNG)
 
 ---
 
@@ -47,980 +50,903 @@ Implementacion de la topologia del area de Redaccion digital
 
 ### Configuración VLANs:
 
-    - VLAN 16: Redacción Digital
-    - VLAN 26: Análisis de Datos
-    - VLAN 36: Infraestructura IT
-    - VLAN 46: Seguridad
-    - VLAN 56: Gerencia
-    - VLAN 76: Recepcion
+    - VLAN 16: Estudiantes
+    - VLAN 26: Docentes
+    - VLAN 36: Vigilancia
+    - VLAN 46: Admin
+    - VLAN 56: Biblioteca
 
-### Tabla de IPs - Dispositivos Finales
+### **DIGA**
 
-#### Redacción Digital (VLAN 16)
-
-| Dispositivo | IP Asignada   |
-| ----------- | ------------- |
-| RD1         | 192.168.16.11 |
-| RD2         | 192.168.16.12 |
-| RD3         | 192.168.16.13 |
-| RD4         | 192.168.16.14 |
-| RD5         | 192.168.16.15 |
-| RD6         | 192.168.16.16 |
-| RD7         | 192.168.16.17 |
-| RD8         | 192.168.16.18 |
-
-#### Análisis de Datos (VLAN 26)
-
-| Dispositivo | IP Asignada   |
-| ----------- | ------------- |
-| AD1         | 192.168.16.21 |
-| AD2         | 192.168.16.22 |
-| AD3         | 192.168.16.23 |
-| AD4         | 192.168.16.24 |
-| AD5         | 192.168.16.25 |
-| AD6         | 192.168.16.26 |
-| AD7         | 192.168.16.27 |
-| AD8         | 192.168.16.28 |
-
-#### Infraestructura IT (VLAN 36)
-
-| Dispositivo | IP Asignada   |
-| ----------- | ------------- |
-| IT1         | 192.168.16.31 |
-| IT2         | 192.168.16.32 |
-| IT3         | 192.168.16.33 |
-| IT4         | 192.168.16.34 |
-| IT5         | 192.168.16.35 |
-| IT7         | 192.168.16.37 |
-| IT8         | 192.168.16.38 |
-
-#### Seguridad (VLAN 46)
-
-| Dispositivo | IP Asignada   |
-| ----------- | ------------- |
-| S1          | 192.168.16.41 |
-| S2          | 192.168.16.42 |
-| S3          | 192.168.16.43 |
-| S4          | 192.168.16.44 |
-| S5          | 192.168.16.45 |
-
-#### Gerencia (VLAN 56)
-
-| Dispositivo | IP Asignada   |
-| ----------- | ------------- |
-| G1          | 192.168.16.51 |
-| G2          | 192.168.16.52 |
-| G3          | 192.168.16.53 |
-| G4          | 192.168.16.54 |
-| G5          | 192.168.16.55 |
-
-#### Recepción (VLAN 76)
-
-| Dispositivo | IP Asignada   |
-| ----------- | ------------- |
-| Local1      | 192.168.16.71 |
-| Local2      | 192.168.16.72 |
-| Local3      | 192.168.16.73 |
-
-### **Area Central**
-
-1.  Switch SERVIDOR
+1.  SW5
 
     ##### Comandos de configuracion:
 
-        # configurando vtp
+        en
+        configure terminal
+        hostname SW5
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode server
+
+        ! Crear VLANs
+        vlan 16
+        name ESTUDIANTES
+        exit
+
+        vlan 26
+        name DOCENTES
+        exit
+
+        vlan 36
+        name VIGILANCIA
+        exit
+
+        vlan 46
+        name ADMIN
+        exit
+
+        ! Configurar trunk
+        interface range fastEthernet 0/1 - 4
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface range fastEthernet 0/5 - 6
+        switchport mode access
+        switchport access vlan 46
+
+
+        end
+        write memory
+
+2.  SW6
+
+    ##### Comandos de configuracion:
+
         enable
         configure terminal
-        hostname Server
+        hostname SW6
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Configurar trunk
+        interface range fastEthernet 0/1 - 2
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface range fastEthernet 0/3 - 4
+        switchport mode access
+        switchport access vlan 36
+
+        interface  fastEthernet 0/5
+        switchport mode access
+        switchport access vlan 46
+
+        end
+        write memory
+
+3.  SW4
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname SW4
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Configurar trunk
+        interface range fastEthernet 0/1 - 4
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface range fastEthernet 0/5 - 6
+        switchport mode access
+        switchport access vlan 46
+
+        end
+        write memory
+
+4.  SW3
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname SW3
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Configurar trunk
+        interface range fastEthernet 0/1 - 2
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface  fastEthernet 0/3
+        switchport mode access
+        switchport access vlan 46
+
+        interface  fastEthernet 0/4
+        switchport mode access
+        switchport access vlan 16
+
+        interface  fastEthernet 0/5
+        switchport mode access
+        switchport access vlan 26
+
+
+        end
+        write memory
+
+5.  MS1
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname MS1
+
+        ! Habilitar enrutamiento IP
+        ip routing
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Crear VLANs (se propagan desde SW5)
+        ! Las VLANs ya existen por VTP
+
+        ! Configurar trunk
+        interface range fastEthernet 0/2 - 4
+        switchport trunk encapsulation dot1q
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+        ! Configurar trunk
+        interface gigabitEthernet 0/1
+        no switchport
+        ip address 10.0.0.78 255.255.255.252
+        no shutdown
+        exit
+
+        ! HSRP por VLAN
+        interface vlan 16
+        ip address 192.168.6.161 255.255.255.248
+        standby 1 ip 192.168.6.163
+        standby 1 priority 110
+        standby 1 preempt
+        no shutdown
+        exit
+
+        interface vlan 26
+        ip address 192.168.6.169 255.255.255.248
+        standby 1 ip 192.168.6.171
+        standby 1 priority 110
+        standby 1 preempt
+        no shutdown
+        exit
+
+        interface vlan 36
+        ip address 192.168.6.129 255.255.255.224
+        standby 1 ip 192.168.6.131
+        standby 1 priority 110
+        standby 1 preempt
+        no shutdown
+        exit
+
+        interface vlan 46
+        ip address 192.168.6.1 255.255.255.128
+        standby 1 ip 192.168.6.3
+        standby 1 priority 110
+        standby 1 preempt
+        no shutdown
+        exit
+
+        end
+        write memory
+
+6.  MS2
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname MS2
+
+        ! Habilitar enrutamiento IP
+        ip routing
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Crear VLANs (se propagan desde SW5)
+        ! Las VLANs ya existen por VTP
+
+        ! Configurar trunk
+        interface range fastEthernet 0/2 - 4
+        switchport trunk encapsulation dot1q
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+        ! Configurar trunk
+        interface gigabitEthernet 0/1
+        no switchport
+        ip address 10.0.0.74 255.255.255.252
+        no shutdown
+        exit
+
+        ! HSRP por VLAN
+        interface vlan 16
+        ip address 192.168.6.162 255.255.255.248
+        standby 1 ip 192.168.6.163
+        standby 1 priority 100
+        standby 1 preempt
+        no shutdown
+        exit
+
+        interface vlan 26
+        ip address 192.168.6.170 255.255.255.248
+        standby 1 ip 192.168.6.171
+        standby 1 priority 100
+        standby 1 preempt
+        no shutdown
+        exit
+
+        interface vlan 36
+        ip address 192.168.6.130 255.255.255.224
+        standby 1 ip 192.168.6.131
+        standby 1 priority 100
+        standby 1 preempt
+        no shutdown
+        exit
+
+        interface vlan 46
+        ip address 192.168.6.2 255.255.255.128
+        standby 1 ip 192.168.6.3
+        standby 1 priority 100
+        standby 1 preempt
+        no shutdown
+        exit
+
+        end
+        write memory
+
+### **Biblioteca**
+
+1.  MS0
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname MS0
+
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
         vtp mode server
-        vtp domain C8_FIUComm
-        vtp password proyecto12025
 
-        # Creación de VLANs
+
+        ! Crear VLANs
         vlan 16
-        name Redacción_Digital
-        vlan 26
-        name Análisis_de_Datos
+        name ESTUDIANTES
+        exit
+
         vlan 36
-        name Infraestructura_IT
-        vlan 46
-        name Seguridad
+        name VIGILANCIA
+        exit
+
         vlan 56
-        name Gerencia
+        name BIBLIOTECA
+        exit
 
-        #confugarcion de enlaces EtherChannel
-        #LACP
-        interface Port-channel 1
-        interface range fastEthernet 0/16 - 18
-        channel-group 1 mode active
-        #Configurar interfaces trunk
-        interface Port-channel 1
+
+        ! Configurar trunk  puertos giga
+        interface range gigabitEthernet 0/1-2
         switchport trunk encapsulation dot1q
         switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
+        switchport trunk allowed vlan 16,36,56
+        no shutdown
+        exit
 
-
-        #LACP
-        interface Port-channel 2
-        interface range fastEthernet 0/4-6
-        channel-group 2 mode active
-        #Configurar interfaces trunk
-        interface Port-channel 2
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-
-
-        #PAGP
-        interface Port-channel 3
-        interface range fastEthernet 0/10 - 12
-        channel-group 3 mode auto
-        #Configurar interfaces trunk
-        interface Port-channel 3
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-
-        #PAGP
-        interface Port-channel 4
-        interface range fastEthernet 0/7 - 9
-        channel-group 4 mode auto
-        #Configurar interfaces trunk
-        interface Port-channel 4
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-
-        #LACP
-        interface Port-channel 5
+        ! Configurar trunk puertos fast
         interface range fastEthernet 0/1 - 3
-        channel-group 5 mode active
-        #Configurar interfaces trunk
-        interface Port-channel 5
         switchport trunk encapsulation dot1q
         switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
+        switchport trunk allowed vlan 16,36,56
+        no shutdown
+        exit
 
+2.  SW0
 
-        #LACP
-        interface Port-channel 6
-        interface range fastEthernet 0/13 - 15
-        channel-group 6 mode active
-        #Configurar interfaces trunk
-        interface Port-channel 6
-        switchport trunk encapsulation dot1q
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname SW0
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Configurar trunk
+        interface fastEthernet 0/1
         switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
+        switchport trunk allowed vlan 16,36,56
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface  fastEthernet 0/2
+        switchport mode access
+        switchport access vlan 36
+
+        interface  fastEthernet 0/3
+        switchport mode access
+        switchport access vlan 56
 
 
-        #configuracion de STP (Spanning tree protocol)
-        spanning-tree mode pvst
-        spanning-tree vlan 16,26,36,46,56 root primary
-        do w
-
-
-        #confuguracion de mensaje de bienvenida
-        banner motd # Bienvenido a Area Central - FIUComm_202000806 #
         end
         write memory
 
-2.  Switch MSW1
+3.  SW1
 
     ##### Comandos de configuracion:
 
-        #configuracion de interfaces trunk
-        interface range fastEthernet 0/1-8
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
+        enable
+        configure terminal
+        hostname SW1
 
-        #confugarcion de enlaces EtherChannel para MSW1
-        #LACP
-        interface Port-channel 1
-        switchport trunk encapsulation dot1q
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Configurar trunk puertos fast
+        interface fastEthernet 0/1
         switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 1
+        switchport trunk allowed vlan 16,36,56
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface range fastEthernet 0/5 - 6
+        switchport mode access
+        switchport access vlan 46
+
+        end
+        write memory
+
+4.  SWITCH6
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname switch6
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Configurar trunk puertos fast
         interface range fastEthernet 0/1-3
-        channel-group 1 mode active
-
-        #LACP
-        interface Port-channel 2
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
         switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 2
-        interface range fastEthernet 0/4-6
-        channel-group 2 mode active
-
-        #configuracion de STP (Spanning tree protocol)
-        spanning-tree mode pvst
-        do w
-
+        switchport trunk allowed vlan 16,36,56
+        no shutdown
         exit
 
-3.  Switch MSW2
-
-    ##### Comandos de configuracion:
-
-        #configuracion de interfaces trunk
-        interface range fastEthernet 0/1-8
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-
-        #confugarcion de enlaces EtherChannel para MSW2
-        #LACP
-        interface Port-channel 1
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 1
-        interface range fastEthernet 0/1-3
-        channel-group 1 mode active
-
-        #LACP
-        interface Port-channel 2
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 2
-        interface range fastEthernet 0/4-6
-        channel-group 2 mode active
-
-        #configuracion de STP (Spanning tree protocol)
-        spanning-tree mode pvst
-        do w
-
-        exit
-
-4.  Switch MSW3
-
-    ##### Comandos de configuracion:
-
-        #configuracion de interfaces trunk
-        interface range fastEthernet 0/1-8
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-
-        #confugarcion de enlaces EtherChannel para MSW3
-        #PAGP
-        interface Port-channel 1
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 1
-        interface range fastEthernet 0/1 - 3
-        channel-group 1 mode desirable
-
-        #PAGP
-        interface Port-channel 2
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 2
-        interface range fastEthernet 0/4 - 6
-        channel-group 2 mode auto
-
-        #configuracion de STP (Spanning tree protocol)
-        spanning-tree mode pvst
-        do w
-
-        exit
-
-5.  Switch MSW4
-
-    ##### Comandos de configuracion:
-
-        #configuracion de interfaces trunk
-        interface range fastEthernet 0/1-8
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-
-        #confugarcion de enlaces EtherChannel para MSW4
-        #PAGP
-        interface Port-channel 1
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 1
-        interface range fastEthernet 0/1 - 3
-        channel-group 1 mode desirable
-
-        #PAGP
-        interface Port-channel 2
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 2
-        interface range fastEthernet 0/4 - 6
-        channel-group 2 mode auto
-
-        #configuracion de STP (Spanning tree protocol)
-        spanning-tree mode pvst
-        do w
-
-        exit
-
-6.  Switch MSW5
-
-    ##### Comandos de configuracion:
-
-        #configuracion de interfaces trunk
-        interface range fastEthernet 0/1-10
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-
-
-        #confugarcion de enlaces EtherChannel para MSW5
-        #LACP
-        interface Port-channel 1
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 1
-        interface range fastEthernet 0/7-9
-        channel-group 1 mode active
-
-        #LACP
-        interface Port-channel 2
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 2
-        interface range fastEthernet 0/1-3
-        channel-group 2 mode active
-
-        #PAGP
-        interface Port-channel 3
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 3
-        interface range fastEthernet 0/4 - 6
-        channel-group 3 mode desirable
-
-        #configuracion de STP (Spanning tree protocol)
-        spanning-tree mode pvst
-        do w
-
-        exit
-
-7.  Switch MSW6
-
-    ##### Comandos de configuracion:
-
-        #configuracion de interfaces trunk
-        interface range fastEthernet 0/1-10
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-
-
-        #confugarcion de enlaces EtherChannel para MSW5
-        #LACP
-        interface Port-channel 1
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 1
-        interface range fastEthernet 0/4-6
-        channel-group 1 mode active
-
-        #LACP
-        interface Port-channel 2
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 2
-        interface range fastEthernet 0/1-3
-        channel-group 2 mode active
-
-        #PAGP
-        interface Port-channel 3
-        #Configurar interfaces trunk
-        switchport trunk encapsulation dot1q
-        switchport mode trunk
-        switchport trunk allowed vlan 16,26,36,46,56
-        #agregando puertos al Port-channel 3
-        interface range fastEthernet 0/7 - 9
-        channel-group 3 mode desirable
-
-        #configuracion de STP (Spanning tree protocol)
-        spanning-tree mode pvst
-        do w
-
-        exit
-
-### **Area de Gerencia**
-
-1.  Switch MSW10
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname MSW10
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 3
-            interface range fastEthernet 0/1-3
-            switchport trunk encapsulation dot1q
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-        #confuguracion de mensaje de bienvenida
-            banner motd # Bienvenido a Gerencia - FIUComm_202000806 #
-            end
-            write memory
-
-2.  Switch SW15
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW15
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 3
-            interface range fastEthernet 0/1-3
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/4
+        ! Configurar access
+        interface fastEthernet 0/2
         switchport mode access
         switchport access vlan 16
 
+        interface fastEthernet 0/3
+        switchport mode access
+        switchport access vlan 56
 
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
 
-3.  Switch SW14
+        end
+        write memory
+
+5.  R0
 
     ##### Comandos de configuracion:
 
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW14
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
+        enable
+        configure terminal
+        hostname R0
 
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 2
+        ! Habilitar enrutamiento IP
+        ip routing
+
+        ! Activa las interfaces físicas
+        interface gigabitEthernet0/1
+        no shutdown
+        exit
+
+        ! Configura subinterfaces en los routers con VRRP
+        ! Subinterfaces VLAN 16
+        interface gigabitEthernet0/0.16
+        encapsulation dot1Q 16
+        ip address 192.158.6.2 255.255.255.128
+        vrrp 16 ip 192.158.6.1
+        vrrp 16 priority 110
+        vrrp 16 preempt
+        exit
+
+
+        ! Subinterfaces VLAN 36
+        interface gigabitEthernet0/0.36
+        encapsulation dot1Q 36
+        ip address 192.158.6.130 255.255.255.224
+        vrrp 36 ip 192.158.6.129
+        vrrp 36 priority 110
+        vrrp 36 preempt
+        exit
+
+        ! Subinterfaces VLAN 56
+        interface gigabitEthernet0/0.56
+        encapsulation dot1Q 56
+        ip address 192.158.6.162 255.255.255.224
+        vrrp 56 ip 192.158.6.161
+        vrrp 56 priority 110
+        vrrp 56 preempt
+        exit
+
+        ! confuguracion de subnetin FLSM
+        ! Conexión a Firewall 2
+        interface gigabitEthernet 0/0
+        ip address 10.0.0.82 255.255.255.252
+        no shutdown
+        exit
+
+6.  R1
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname R1
+
+        ! Habilitar enrutamiento IP
+        ip routing
+
+        ! Activa la interfaz física principal
+        interface gigabitEthernet0/1
+        no shutdown
+        exit
+
+        ! Configura subinterfaces en los routers con VRRP
+        ! Subinterfaces VLAN 16
+        interface gigabitEthernet0/0.16
+        encapsulation dot1Q 16
+        ip address 192.158.6.3 255.255.255.128
+        vrrp 16 ip 192.158.6.1
+        vrrp 16 priority 100
+        vrrp 16 preempt
+        exit
+
+
+        ! Subinterfaces VLAN 36
+        interface gigabitEthernet0/0.36
+        encapsulation dot1Q 36
+        ip address 192.158.6.131 255.255.255.224
+        vrrp 36 ip 192.158.6.129
+        vrrp 36 priority 110
+        vrrp 36 preempt
+        exit
+
+        ! Subinterfaces VLAN 56
+        interface gigabitEthernet0/0.56
+        encapsulation dot1Q 56
+        ip address 192.158.6.163 255.255.255.224
+        vrrp 56 ip 192.158.6.161
+        vrrp 56 priority 100
+        vrrp 56 preempt
+        exit
+
+        ! confuguracion de subnetin FLSM
+        ! Conexión a Firewall 2
+        interface gigabitEthernet 0/0
+        ip address 10.0.0.82 255.255.255.252
+        no shutdown
+        exit
+
+### **T4**
+
+1.  SW8
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname SW8
+
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode server
+
+
+        ! Crear VLANs
+        vlan 16
+        name ESTUDIANTES
+        exit
+
+        vlan 26
+        name DOCENTES
+        exit
+
+        vlan 36
+        name VIGILANCIA
+        exit
+
+        vlan 46
+        name ADMIN
+        exit
+
+        vlan 56
+        name BIBLIOTECA
+        exit
+
+
+        ! Configurar trunk puertos fast
+        interface range fastEthernet 0/1 - 3
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46,56
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface  fastEthernet 0/4
+        switchport mode access
+        switchport access vlan 16
+
+        interface  fastEthernet 0/5
+        switchport mode access
+        switchport access vlan 46
+
+        end
+        write memory
+
+2.  SW9
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname SW9
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Configurar trunk puertos fast
         interface range fastEthernet 0/1-2
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46,56
+        no shutdown
+        exit
 
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/3
+        ! Configurar access
+        interface  fastEthernet 0/3
         switchport mode access
         switchport access vlan 36
 
-        interface Fa0/4
-        switchport mode access
-        switchport access vlan 46
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-4.  Switch SW13
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW13
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk
-            interface Fa0/1
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/2
+        interface  fastEthernet 0/4
         switchport mode access
         switchport access vlan 26
 
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-5.  Switch SW16
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW16
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 2
-            interface range fastEthernet 0/1-2
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/3
-        switchport mode access
-        switchport access vlan 56
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-6.  Switch SW17
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW17
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 2
-            interface Fa0/1
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/2
-        switchport mode access
-        switchport access vlan 36
-
-        interface Fa0/3
-        switchport mode access
-        switchport access vlan 26
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-### **Area de Analisis de datos**
-
-1.  Switch MSW7
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname MSW7
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 8
-            interface range fastEthernet 0/1-8
-            switchport trunk encapsulation dot1q
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #confuguracion de mensaje de bienvenida
-            banner motd # Bienvenido a Analisis de Datos - FIUComm_202000806 #
-            end
-            write memory
-
-2.  Switch SW1
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW1
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 5
-            interface range fastEthernet 0/1-5
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/6
-        switchport mode access
-        switchport access vlan 36
-
-        interface Fa0/7
-        switchport mode access
-        switchport access vlan 26
-
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-3.  Switch SW2
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW2
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 5
-            interface range fastEthernet 0/1-5
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/6
-        switchport mode access
-        switchport access vlan 16
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-4.  Switch SW3
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW3
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 5
-            interface range fastEthernet 0/1-5
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/6
-        switchport mode access
-        switchport access vlan 26
-
-        interface Fa0/7
-        switchport mode access
-        switchport access vlan 56
-
-        interface Fa0/8
-        switchport mode access
-        switchport access vlan 26
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-5.  Switch SW4
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW4
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 5
-            interface range fastEthernet 0/1-5
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/6
-        switchport mode access
-        switchport access vlan 16
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-### **Area de Infraestructura de IT**
-
-1.  Switch MSW8
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname MSW8
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 6
-            interface range fastEthernet 0/1-6
-            switchport trunk encapsulation dot1q
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-        #confuguracion de mensaje de bienvenida
-            banner motd # Bienvenido a Infraestructura IT - FIUComm_202000806 #
-            end
-            write memory
-
-2.  Switch SW8
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW8
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 2
-            interface range fastEthernet 0/1-2
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/3
-        switchport mode access
-        switchport access vlan 16
-
-        interface Fa0/4
-        switchport mode access
-        switchport access vlan 36
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-3.  Switch SW9
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW9
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 2
-            interface range fastEthernet 0/1-2
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/3
-        switchport mode access
-        switchport access vlan 26
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-4.  Switch SW10
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW10
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 2
-            interface range fastEthernet 0/1-2
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/3
-        switchport mode access
-        switchport access vlan 16
-
-        interface Fa0/4
-        switchport mode access
-        switchport access vlan 56
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-### **Area de Redaccion Digital**
-
-1.  Switch MSW9
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname MSW9
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 4
-            interface range fastEthernet 0/1-4
-            switchport trunk encapsulation dot1q
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/5
-        switchport mode access
-        switchport access vlan 46
-
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
-
-        #confuguracion de mensaje de bienvenida
-        banner motd # Bienvenido a Redaccion Digital - FIUComm_202000806 #
         end
         write memory
 
-2.  Switch SW18
+3.  SW7
 
     ##### Comandos de configuracion:
 
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW18
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
+        enable
+        configure terminal
+        hostname SW7
 
-        #configuracion de interfaces trunk este comando es para hacerlo por un rango ahi dice que del puerto 1 al 2
-            interface range fastEthernet 0/1-2
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
 
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
+        ! Configurar trunk puertos fast
+        interface range fastEthernet 0/1-2
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46,56
+        no shutdown
+        exit
 
-3.  Switch
-
-    ##### Comandos de configuracion:
-
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW19
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
-
-        #configuracion de interfaces trunk
-            interface Fa0/1
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
-
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/2
+        ! Configurar access
+        interface range fastEthernet 0/3 - 4
         switchport mode access
         switchport access vlan 56
 
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
+        end
+        write memory
 
-4.  Switch SW20
+4.  MS5
 
     ##### Comandos de configuracion:
 
-        #configurando en modo cliente
-        # configurando vtp
-            enable
-            configure terminal
-            hostname SW20
-            vtp mode client
-            vtp domain C8_FIUComm
-            vtp password proyecto12025
+        enable
+        configure terminal
+        hostname MS5
 
-        #configuracion de interfaces trunk
-            interface Fa0/1
-            switchport mode trunk
-            switchport trunk allowed vlan 16,26,36,46,56
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
 
-        #configuracion de interfaces access para respectivo equipo
-        interface Fa0/2
+        ! Configurar trunk puertos fast
+        interface range fastEthernet 0/1-3
+        switchport trunk encapsulation dot1q
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46,56
+        no shutdown
+        exit
+
+        ! Configurar SVI para VLAN 16 - Estudiantes
+        interface vlan 16
+        ip address 172.16.6.129 255.255.255.192
+        no shutdown
+        exit
+
+        ! Configurar SVI para VLAN 26 - Docentes
+        interface vlan 26
+        ip address 172.16.6.241 255.255.255.240
+        no shutdown
+        exit
+
+        ! Configurar SVI para VLAN 36 - Vigilancia
+        interface vlan 36
+        ip address 172.16.6.193 255.255.255.224
+        no shutdown
+        exit
+
+        ! Configurar SVI para VLAN 46 - Admin
+        interface vlan 46
+        ip address 172.16.6.1 255.255.255.128
+        no shutdown
+        exit
+
+        ! Configurar SVI para VLAN 56 - Biblioteca
+        interface vlan 56
+        ip address 172.16.6.225 255.255.255.240
+        no shutdown
+        exit
+
+        ! Interfaz hacia backbone (R6) - Rutas estáticas
+        interface gigabitEthernet 1/0/24
+        no switchport
+        ip address 10.0.0.42 255.255.255.252
+        no shutdown
+        exit
+
+        end
+        write memory
+
+### **S11**
+
+1.  SW11
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname SW11
+
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode server
+
+
+        ! Crear VLANs
+        vlan 16
+        name ESTUDIANTES
+        exit
+
+        vlan 26
+        name DOCENTES
+        exit
+
+        vlan 36
+        name VIGILANCIA
+        exit
+
+        vlan 46
+        name ADMIN
+        exit
+
+        ! Configurar trunk  puertos giga
+        interface range gigabitEthernet 0/1-2
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+
+        ! Configurar trunk puertos fast
+        interface range fastEthernet 0/1 - 2
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface  fastEthernet 0/3
         switchport mode access
-        switchport access vlan 46
+        switchport access vlan 26
 
-        interface Fa0/3
+        interface  fastEthernet 0/4
         switchport mode access
         switchport access vlan 16
 
-        #configuracion de STP (Spanning tree protocol)
-            spanning-tree mode pvst
-            do w
+        end
+        write memory
 
----
+2.  SW10
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname SW10
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Configurar trunk puertos fast
+        interface fastEthernet 0/1
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface  fastEthernet 0/2
+        switchport mode access
+        switchport access vlan 46
+
+        interface  fastEthernet 0/3
+        switchport mode access
+        switchport access vlan 26
+
+        end
+        write memory
+
+3.  SW12
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname SW12
+
+        ! Configurar VTP
+        vtp domain 202000806
+        vtp password usac2025
+        vtp mode client
+
+        ! Configurar trunk puertos fast
+        interface fastEthernet 0/1
+        switchport mode trunk
+        switchport trunk allowed vlan 16,26,36,46
+        no shutdown
+        exit
+
+        ! Configurar access
+        interface  fastEthernet 0/2
+        switchport mode access
+        switchport access vlan 16
+
+        interface  fastEthernet 0/3
+        switchport mode access
+        switchport access vlan 36
+
+        end
+        write memory
+
+4.  R10
+
+    ##### Comandos de configuracion:
+
+        enable
+        configure terminal
+        hostname R0
+
+        ! Habilitar enrutamiento IP
+        ip routing
+
+        ! Activa las interfaces físicas
+        interface gigabitEthernet0/1
+        no shutdown
+        exit
+
+        ! Configura subinterfaces en los routers con VRRP
+        ! Subinterfaces VLAN 16
+        interface gigabitEthernet0/0.16
+        encapsulation dot1Q 16
+        ip address 172.148.6.2 255.255.255.128
+        vrrp 16 ip 172.148.6.1
+        vrrp 16 priority 110
+        vrrp 16 preempt
+        exit
+
+        ! Subinterfaces VLAN 26
+        interface gigabitEthernet0/0.26
+        encapsulation dot1Q 26
+        ip address 172.148.6.194 255.255.255.224
+        vrrp 26 ip 172.148.6.193
+        vrrp 26 priority 110
+        vrrp 26 preempt
+        exit
+
+
+        ! Subinterfaces VLAN 36
+        interface gigabitEthernet0/0.36
+        encapsulation dot1Q 36
+        ip address 172.148.6.226 255.255.255.240
+        vrrp 36 ip 172.148.6.225
+        vrrp 36 priority 110
+        vrrp 36 preempt
+        exit
+
+        ! Subinterfaces VLAN 46
+        interface gigabitEthernet0/0.46
+        encapsulation dot1Q 56
+        ip address 172.148.6.130 255.255.255.192
+        vrrp 46 ip 172.148.6.129
+        vrrp 46 priority 110
+        vrrp 46 preempt
+        exit
+
+        ! confuguracion de subnetin FLSM
+        ! Conexión a Firewall 4
+        interface gigabitEthernet 0/0
+        ip address 10.0.0.90 255.255.255.252
+        no shutdown
+        exit
